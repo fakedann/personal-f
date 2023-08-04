@@ -5,7 +5,7 @@ import LogoutButton from './LogoutButton';
 
 function App() {
 
-  console.log('new repo!!')
+  console.log('setting up new branch and repo')
 
   const {isLoading, error} = useAuth0()
   const {user, isAuthenticated} = useAuth0()
