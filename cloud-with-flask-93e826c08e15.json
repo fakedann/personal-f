@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cloud-with-flask",
+  "private_key_id": "93e826c08e15afd27290e1766cb65847873a5f1d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYStmT+euj0xgJ\nPxIjMKsFy88rzYoPmMJc6tCB025f7SNw59rQ/RPnQDzrg3/4oP6j0LT6k4L2gybY\nEFiZfMmdhikAsrlKvBZ5AyjxiSe+ULAdNAZhUunIFBxLnYaDf8y+pTZZSPs8d9WR\nPzti0nLRB4I1JzBHlX/Iw6mYasYtERQYd8MSqCB+hAkU/vkdqIaRHzFSQBLaaMcz\neylqdK8cWoSNv60Yg8pEUl9/EWi4ScLkrilEXK5qHnuHENwL1QuoUg+Ntk4pUvzD\nsKvjBn/4FkhfYuLgSIDaVFRi4PCpEMNWKMkVnDdTXsqmGGwVYH/UCZp9OGM+wa+p\n+LxtRzfVAgMBAAECggEAGJguSdrN1i5EmeyPkevQo/3rEVaJFUFFZ05re4/AtGy2\ng89W0j6CMGCywgRicrGlMu3NCSnpPEG+kta3qcBcUVVg5+DqxppA+JgI5FTjGDYm\n8zMoFJIFM7NBt8FyUGqhq/4FAj2/v75P985Xtjgq8SToQ/CwVzt4hn+P6IfKVXOu\n+36ZeIXJHqeshU6Ty+ElGF2Sig3a38EKozLRdE2sjB3JW4MpDhFgqNvRx17CKh+7\nWG8ToSFYfD3Jh3Vi0EA1RE+odNuwbYxp+wUOrGZwCKR43WdqV8N6whqbjOTz9ER3\nAinXDODHrW3RfoCdvAq8HKInGtl9Wjefd7rdLQ22MwKBgQD0kbruwaBuy4yfKqVc\n471UP2z56mWUF/iL3ECfh2+OelzK7e6fpiM3EvRLj1mb9lWzl313EmOvaIMZrQ4L\n66duw6p1diMg/xFVcewNhmzS0RJVUXWsN6CHVyW6ustb7wmuByNasPggtC5HnlSq\nzeqc/LUwrZj1v+UJprQKOe6q0wKBgQDiZsl704JJjleoT8FJveiTP/bsr09nlz49\nxYHX4TqzETOLd54xAskkRDdbo/ycviHhmHzY9eWWuIS/Az4XF9Xksd95ASHNuFrf\nfOblS5Mpw1jubUMb51C67k8XofDaGvM5SdbWFYtr4hLln0oX7X4XTrrMW0pu0RXV\nTFd8AEGZtwKBgFu5KBWRUt0axAOR1/DtjL1DCFj2euA+2T2C/k2WWtVhuNl2wM7p\nXT2zgyGvgpkGmv++6hQ1NmO726dOiv0XhXT6NzzUcLpYTyTvk+tCph+uv6R1558O\nQctgeMr+cXRqQwQcszq5MmX5jX3YuMJSdhIoiL/X640HShwDhHRtY8B3AoGBAMo4\nNxUUCZZ7vo4GlsWwC9GiW4Jy4ADOFXkFNgHGGjEhVyHmePSb4V80UyHWambyaL7g\n/fqoQCaMr30Rf18PGizIN6wUN8ZROVHPdUkvZMXzxzZHf56n0PL2ssyQB9o4IjF0\nY6Ea40o8Rta0nXCb33kgCDdJ/0TWGqNHKgkHDZEnAoGBAMS+vgJBg1W373ZUuQ8W\nv2G+IUy3eeR5VvuRdyvPaXmXtBvlDBdUk5d/gxSwycdr/cgsTw7dBGGww6KLPvMO\n728Tz61BW5apUs0mIair8qgXcU8ZjWh8MLwfIL5JlmZbb+005IpLpQjeBUkrgBHD\naSmXotVwyxPUNhXC3oUnOtKZ\n-----END PRIVATE KEY-----\n",
+  "client_email": "fakecloudstorage@cloud-with-flask.iam.gserviceaccount.com",
+  "client_id": "103625652200743060525",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fakecloudstorage%40cloud-with-flask.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
