@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import boto3
 
 app = Flask(__name__)
-# app.secret_key = "hello"
+app.secret_key = "hello"
 bot_session = boto3.Session(profile_name= 'fakey')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -61,7 +61,7 @@ def greet():
     else:
         file = request.files['files[]']
         s3 = bot_session.resource("s3")
-        s3.Bucket("test1fa").upload_fileobj(file, "532131235.pdf")
+        s3.Bucket("test1fa").upload_fileobj(file, "gatico.png")
         # return jsonify('https://test1fa.s3.amazonaws.com/4444.png')
 
     friend = Friends(name['name'])
@@ -71,6 +71,7 @@ def greet():
     db.session.commit()
     print(homehome, friend)
     return homehome.to_json()
+    # return jsonify('hola')
 
 
 if __name__ == "__main__":

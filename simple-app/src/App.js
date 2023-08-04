@@ -4,9 +4,6 @@ import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 
 function App() {
-
-  console.log('setting up new branch and repo')
-
   const {isLoading, error} = useAuth0()
   const {user, isAuthenticated} = useAuth0()
   const [formData, setFormData] = useState({
