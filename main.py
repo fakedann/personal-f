@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import boto3
+import uuid
 
 app = Flask(__name__)
 app.secret_key = "hello"
@@ -59,9 +60,10 @@ def greet():
     if 'files[]' not in request.files:
         print('not yet dani')
     else:
+        rand_id = uuid.uuid4().hex+".png"
         file = request.files['files[]']
         s3 = bot_session.resource("s3")
-        s3.Bucket("test1fa").upload_fileobj(file, "gatico.png")
+        s3.Bucket("test1fa").upload_fileobj(file, rand_id)
         # return jsonify('https://test1fa.s3.amazonaws.com/4444.png')
 
     friend = Friends(name['name'])
