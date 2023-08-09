@@ -1,8 +1,14 @@
+html {
+  background-color: #edc37a;
+}
+
 .App {
   text-align: center;
+
 }
 
 .loginBox {
+  background-color: white;
   margin: auto;
   width: 50%;
   border: 3px solid black;
