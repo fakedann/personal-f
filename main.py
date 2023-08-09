@@ -1,3 +1,4 @@
+import email
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -12,30 +13,37 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app, intercept_exceptions=False, supports_credentials=True)
 
-class Friends(db.Model):
+class Users(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    role = db.Column(db.String(10))
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, email, role):
+        self.email = email
+        self.role = role
 
     def to_json(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'name': self.email,
+            'role': self.role
         }
 
 class Homework(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    prof_id = db.Column(db.Integer)
+    stud_id = db.Column(db.Integer)
 
-    def __init__(self, name):
+    def __init__(self, name, prof_id, stud_id):
         self.name = name
+        self.prof_id = prof_id
+        self.stud_id = stud_id
 
     def to_json(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'professor_id': self.prof_id,
+            'student_id': self.stud_id
         }
 
 
@@ -66,13 +74,13 @@ def greet():
         s3.Bucket("test1fa").upload_fileobj(file, rand_id)
         # return jsonify('https://test1fa.s3.amazonaws.com/4444.png')
 
-    friend = Friends(name['name'])
+    friend = Users(name['name'], name['role'])
     db.session.add(friend)
-    homehome = Homework(name['role'])
-    db.session.add(homehome)
+    # homehome = Homework(name['role'])
+    # db.session.add(homehome)
     db.session.commit()
-    print(homehome, friend)
-    return homehome.to_json()
+    print(friend)
+    return friend.to_json()
     # return jsonify('hola')
 
 
