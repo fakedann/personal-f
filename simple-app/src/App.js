@@ -1,3 +1,4 @@
+import './App.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from 'react';
 import LoginButton from './LoginButton';
@@ -11,7 +12,6 @@ function App() {
 
   })
   const [image, setImage] = useState('')
-  const [holder, setHolder] = useState('')
 
   function handleImage(event){
     console.log(event.target.files[0])
@@ -51,18 +51,20 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Login here!</h1>
-      {error && <p>Authentication error!</p>}
-      {!error && isLoading && <p>Loading!</p>}
-      {!error && !isLoading && (
-        <div>
-          <LoginButton />
-          {isAuthenticated ? console.log(user): null}
-          <LogoutButton />
-        </div>
-      )}
+      <div className="loginBox">
+        <h1 id="hola">Welcome to HomeWork Master!</h1>
+          {error && <p>Authentication error!</p>}
+          {!error && isLoading && <p>Loading!</p>}
+          {!error && !isLoading && (
+            <div>
+              <LoginButton />
+              {isAuthenticated ? console.log(user): null}
+              <LogoutButton />
+            </div>
+          )}
+      </div>
 
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <label>Name:</label>
         <input
           type="text"
@@ -73,8 +75,8 @@ function App() {
         <input type="file" name="file" encType="multipart/form-data" onChange={handleImage}/>
         
         <button id="submit" type="submit">Submit</button> 
-      </form>
-      <img src={holder}/>
+      </form> */}
+      
     </div>
   );
 }

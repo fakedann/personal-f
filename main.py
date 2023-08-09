@@ -63,10 +63,9 @@ def hello_world():
 # /username/<name> 
 @app.route("/username", methods=["POST"])
 def greet():
-    name = request.form
-    print(name)
+    user = request.form
     if 'files[]' not in request.files:
-        print('not yet dani')
+        print('A file has not been sent.')
     else:
         rand_id = uuid.uuid4().hex+".png"
         file = request.files['files[]']
@@ -74,14 +73,13 @@ def greet():
         s3.Bucket("test1fa").upload_fileobj(file, rand_id)
         # return jsonify('https://test1fa.s3.amazonaws.com/4444.png')
 
-    friend = Users(name['name'], name['role'])
+    friend = Users(user['name'], user['role'])
     db.session.add(friend)
     # homehome = Homework(name['role'])
     # db.session.add(homehome)
     db.session.commit()
     print(friend)
     return friend.to_json()
-    # return jsonify('hola')
 
 
 if __name__ == "__main__":
