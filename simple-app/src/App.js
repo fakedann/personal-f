@@ -1,8 +1,11 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from 'react';
 import LoginButton from './LoginButton';
 import HomePage from './HomePage';
+import NavBar from './NavBar';
+import SubmitHw from './SubmitHw';
 
 function App() {
 
@@ -13,10 +16,14 @@ function App() {
 
   if(user){
     console.log('there is an user rn')
-    return <div>
-        {user ? console.log(user): null}
-        <HomePage user={user}/>
-    </div>
+    return <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<NavBar />}>
+        <Route index element={<HomePage user={user}/>} />
+        <Route exact path="/submit/hw" element={<SubmitHw user={user}/>} /> 
+      </Route>
+    </Routes>
+  </BrowserRouter>
     
   }
   else{
