@@ -16,14 +16,14 @@ function SubmitHw({user}){
 
   function handleSubmit(event){
     event.preventDefault()
-    const items = new FormData()
-    items.append('title', formData.title)
-    items.append('files[]', file)
-    items.append('role', user? user.Role_in_company: 'nada')
+    const homework = new FormData()
+    homework.append('title', formData.title)
+    homework.append('files[]', file)
+    // homework.append('role', user? user.Role_in_company: 'nada')
 
-    fetch(`http://127.0.0.1:5000/username`, {
+    fetch(`http://127.0.0.1:5000/createHomework`, {
       method: "POST",
-      body: items,
+      body: homework,
     }).then((r) => {
       if (r.ok) {
         r.json().then( (resp) => console.log(resp))

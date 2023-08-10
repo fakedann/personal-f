@@ -25,7 +25,7 @@ class Users(db.Model):
     def to_json(self):
         return {
             'id': self.id,
-            'name': self.email,
+            'email': self.email,
             'role': self.role
         }
 
@@ -34,11 +34,13 @@ class Homework(db.Model):
     title = db.Column(db.String(50))
     prof_id = db.Column(db.Integer)
     stud_id = db.Column(db.Integer)
+    s3_url = db.Column(db.String(50))
 
-    def __init__(self, title, stud_id):
+    def __init__(self, title, stud_id, url):
         self.title = title
         self.prof_id = None
         self.stud_id = stud_id
+        self.s3_url = url
 
     def set_professor(self, prof_id):
         self.prof_id = prof_id
@@ -47,7 +49,8 @@ class Homework(db.Model):
         return {
             'id': self.id,
             'professor_id': self.prof_id,
-            'student_id': self.stud_id
+            'student_id': self.stud_id,
+            'url': self.s3_url
         }
 
 
@@ -84,10 +87,25 @@ def greet():
     db.session.commit()
     return newUser.to_json()
 
+@app.route("/createHomework", methods=["POST"])
+def create_homework():
+    assignment = request.form
+    print(assignment)
+    if 'files[]' not in request.files:
+        return jsonify('File not included.')
+    else:
+        # new_assignment = Homework(assignment['title'], )
+        rand_id = uuid.uuid4().hex+".png"
+        file = request.files['files[]']
+        s3 = bot_session.resource("s3")
+        s3.Bucket("test1fa").upload_fileobj(file, rand_id)
+        return jsonify('https://test1fa.s3.amazonaws.com/'+rand_id)
+
 @app.route("/hola", methods=["POST"])
 def holaa():
-    print('it is working')
+    print('hola')
     return jsonify('hola')
+    
 
 
 if __name__ == "__main__":

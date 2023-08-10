@@ -14,7 +14,6 @@ function App() {
   const {user} = useAuth0()
   const [newUser, setNew] = useState('')
 
-
   function createUserinDatabase(){
     const newUser = new FormData()
     newUser.append('email', user.email)
