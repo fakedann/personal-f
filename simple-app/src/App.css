@@ -1,5 +1,5 @@
 html {
-  background-color: #edc37a;
+  background-color: #FAEDB1;
 }
 
 .App {
@@ -13,6 +13,35 @@ html {
   width: 50%;
   border: 3px solid black;
   padding: 10px;
-  margin-top: 200px;
+  margin-top: 150px;
+}
+
+.homePage {
+  text-align: center;
+  background-color: white;
+  margin: auto;
+  width: 50%;
+  border: 3px solid black;
+  padding: 10px;
+  margin-top: 150px;
+}
+
+.botones {
+  background-color: #7C6354;
+  border: 2px solid black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.nav ul{
+  text-decoration: none;
+  color: black;
+  display: flex;
+  gap: 1rem;
+
 }
 

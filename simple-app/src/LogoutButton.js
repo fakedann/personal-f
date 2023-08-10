@@ -9,7 +9,7 @@ function LogoutButton(){
   return (
     isAuthenticated && (
       <div>
-        <button onClick={() => logout()}>
+        <button className="botones" onClick={() => logout()}>
           Sign Out
         </button>
       </div>

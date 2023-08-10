@@ -11,7 +11,10 @@ function HomePage({user}){
 
   return (
     
-    <div>
+    <div className="homePage">
+      <h1>Welcome to Homework Master!</h1>
+      <h3>Email: {user.email}</h3>
+      <h3>Account type: {user.Role_in_company === "pro" ? "Professor": "Student"}</h3>
       <LogoutButton />
     </div>
     

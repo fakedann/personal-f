@@ -12,10 +12,40 @@ function App() {
 
   const {isLoading, error} = useAuth0()
   const {user} = useAuth0()
+  const [newUser, setNew] = useState('')
+
+
+  function createUserinDatabase(){
+    const newUser = new FormData()
+    newUser.append('email', user.email)
+    newUser.append('role', user.Role_in_company)
+
+
+    fetch(`http://127.0.0.1:5000/createUser`, {
+      method: "POST",
+      body: newUser,
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then( (resp) => {
+          console.log(resp)
+          setNew(resp.email)
+        })
+      } else{
+        r.json().then( (err) => console.log(err))
+      }
+    })
+  }
 
 
   if(user){
     console.log('there is an user rn')
+
+    if(user.login_count === 1 && newUser === ''){
+      createUserinDatabase()
+    }else{
+      console.log("already created!")
+    }
+
     return <BrowserRouter>
     <Routes>
       <Route path="/" element={<NavBar />}>
@@ -30,7 +60,7 @@ function App() {
     return (
       <div className="App">
         <div className="loginBox">
-          <h1>Welcome to HomeWork Master!</h1>
+          <h1>Please, log or sign into your Homework Master account.</h1>
             {error && <p>Authentication error!</p>}
             {!error && isLoading && <p>Loading!</p>}
             {!error && !isLoading && (
@@ -39,66 +69,9 @@ function App() {
               </div>
             )}
         </div>
-  
-        {/* <form onSubmit={handleSubmit}>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            onChange={handleChange}
-            value={formData.name}
-          />
-          <input type="file" name="file" encType="multipart/form-data" onChange={handleImage}/>
-          
-          <button id="submit" type="submit">Submit</button> 
-        </form> */}
-        
       </div>
     );
   }
-  // const [formData, setFormData] = useState({
-  //   name: "",
-
-  // })
-  // const [image, setImage] = useState('')
-
-  // function handleImage(event){
-  //   console.log(event.target.files[0])
-  //   setImage(event.target.files[0])
-  // }
-
-  // function handleSubmit(event){
-  //   event.preventDefault()
-  //   console.log(formData.name)
-  //   const items = new FormData()
-  //   // items.append('image', image)
-  //   items.append('name', formData.name)
-  //   items.append('files[]', image)
-  //   items.append('role', user? user.Role_in_company: 'nada')
-
-  //   fetch(`http://127.0.0.1:5000/username`, {
-  //     method: "POST",
-  //     body: items,
-  //   }).then((r) => {
-  //     if (r.ok) {
-  //       r.json().then( (resp) => console.log(resp))
-  //     } else{
-  //       r.json().then( (err) => console.log(err))
-  //     }
-  //   })
-  // }
-
-  // function handleChange(event) {
-  //   const name = event.target.name;
-  //   let value = event.target.value;
-
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // }
-
- 
 }
 
 export default App;

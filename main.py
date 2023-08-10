@@ -31,13 +31,17 @@ class Users(db.Model):
 
 class Homework(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
+    title = db.Column(db.String(50))
     prof_id = db.Column(db.Integer)
     stud_id = db.Column(db.Integer)
 
-    def __init__(self, name, prof_id, stud_id):
-        self.name = name
-        self.prof_id = prof_id
+    def __init__(self, title, stud_id):
+        self.title = title
+        self.prof_id = None
         self.stud_id = stud_id
+
+    def set_professor(self, prof_id):
+        self.prof_id = prof_id
 
     def to_json(self):
         return {
@@ -61,25 +65,29 @@ def hello_world():
 
 #Creating variable paths and converting the path to a specified data type
 # /username/<name> 
-@app.route("/username", methods=["POST"])
+@app.route("/createUser", methods=["POST"])
 def greet():
     user = request.form
-    if 'files[]' not in request.files:
-        print('A file has not been sent.')
-    else:
-        rand_id = uuid.uuid4().hex+".png"
-        file = request.files['files[]']
-        s3 = bot_session.resource("s3")
-        s3.Bucket("test1fa").upload_fileobj(file, rand_id)
+    # if 'files[]' not in request.files:
+    #     print('A file has not been sent.')
+    # else:
+    #     rand_id = uuid.uuid4().hex+".png"
+    #     file = request.files['files[]']
+    #     s3 = bot_session.resource("s3")
+    #     s3.Bucket("test1fa").upload_fileobj(file, rand_id)
         # return jsonify('https://test1fa.s3.amazonaws.com/4444.png')
 
-    friend = Users(user['name'], user['role'])
-    db.session.add(friend)
+    newUser = Users(user['email'], user['role'])
+    db.session.add(newUser)
     # homehome = Homework(name['role'])
     # db.session.add(homehome)
     db.session.commit()
-    print(friend)
-    return friend.to_json()
+    return newUser.to_json()
+
+@app.route("/hola", methods=["POST"])
+def holaa():
+    print('it is working')
+    return jsonify('hola')
 
 
 if __name__ == "__main__":
