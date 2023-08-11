@@ -43,6 +43,9 @@ class Assignments(db.Model):
         self.stud_id = stud_id
         self.s3_url = url
 
+    def set_professor(self, prof_id):
+        self.prof_id = prof_id
+
     def to_json(self):
         return {
             'id': self.id,
@@ -103,10 +106,13 @@ def create_homework():
 @app.route("/hola", methods=["POST"])
 def holaa():
     print('hola')
-    hola = Assignments.query.all()
+    chao = Users.query.filter_by(email="joseleon@gmail.com").first()
+    print(chao)
+    hola = Assignments.query.first()
     print(hola)
+    hola.set_professor(chao.id)
     
-    return jsonify('hola')
+    return hola.to_json()
     
 
 

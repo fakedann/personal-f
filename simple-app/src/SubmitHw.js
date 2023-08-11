@@ -20,7 +20,7 @@ function SubmitHw({user}){
     homework.append('title', formData.title)
     homework.append('files[]', file)
 
-    fetch(`http://127.0.0.1:5000/createHomework`, {
+    fetch(`http://127.0.0.1:5000/hola`, {
       method: "POST",
       body: homework,
     }).then((r) => {
