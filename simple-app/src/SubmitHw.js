@@ -10,16 +10,15 @@ function SubmitHw({user}){
   const [file, setFile] = useState('')
 
   function handleFile(event){
-    console.log(event.target.files[0])
     setFile(event.target.files[0])
   }
 
   function handleSubmit(event){
     event.preventDefault()
     const homework = new FormData()
+    homework.append('email', user.email)
     homework.append('title', formData.title)
     homework.append('files[]', file)
-    // homework.append('role', user? user.Role_in_company: 'nada')
 
     fetch(`http://127.0.0.1:5000/createHomework`, {
       method: "POST",

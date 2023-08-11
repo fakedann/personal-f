@@ -37,8 +37,6 @@ function App() {
 
 
   if(user){
-    console.log('there is an user rn')
-
     if(user.login_count === 1 && newUser === ''){
       createUserinDatabase()
     }else{

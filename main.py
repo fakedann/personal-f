@@ -1,4 +1,5 @@
 import email
+from gettext import find
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -29,7 +30,7 @@ class Users(db.Model):
             'role': self.role
         }
 
-class Homework(db.Model):
+class Assignments(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     prof_id = db.Column(db.Integer)
@@ -38,21 +39,18 @@ class Homework(db.Model):
 
     def __init__(self, title, stud_id, url):
         self.title = title
-        self.prof_id = None
+        self.prof_id = 0
         self.stud_id = stud_id
         self.s3_url = url
-
-    def set_professor(self, prof_id):
-        self.prof_id = prof_id
 
     def to_json(self):
         return {
             'id': self.id,
+            'title': self.title,
             'professor_id': self.prof_id,
             'student_id': self.stud_id,
             'url': self.s3_url
         }
-
 
 with app.app_context():
     db.create_all()
@@ -71,21 +69,14 @@ def hello_world():
 @app.route("/createUser", methods=["POST"])
 def greet():
     user = request.form
-    # if 'files[]' not in request.files:
-    #     print('A file has not been sent.')
-    # else:
-    #     rand_id = uuid.uuid4().hex+".png"
-    #     file = request.files['files[]']
-    #     s3 = bot_session.resource("s3")
-    #     s3.Bucket("test1fa").upload_fileobj(file, rand_id)
-        # return jsonify('https://test1fa.s3.amazonaws.com/4444.png')
-
-    newUser = Users(user['email'], user['role'])
-    db.session.add(newUser)
-    # homehome = Homework(name['role'])
-    # db.session.add(homehome)
-    db.session.commit()
-    return newUser.to_json()
+    hola = Users.query.filter_by(email=user['email']).first()
+    if hola:
+        return jsonify('Already exists.')
+    else:
+        newUser = Users(user['email'], user['role'])
+        db.session.add(newUser)
+        db.session.commit()
+        return newUser.to_json()
 
 @app.route("/createHomework", methods=["POST"])
 def create_homework():
@@ -94,16 +85,27 @@ def create_homework():
     if 'files[]' not in request.files:
         return jsonify('File not included.')
     else:
-        # new_assignment = Homework(assignment['title'], )
-        rand_id = uuid.uuid4().hex+".png"
-        file = request.files['files[]']
-        s3 = bot_session.resource("s3")
-        s3.Bucket("test1fa").upload_fileobj(file, rand_id)
-        return jsonify('https://test1fa.s3.amazonaws.com/'+rand_id)
+        hola = Users.query.filter_by(email=assignment['email']).first()
+        if hola:
+            rand_id = uuid.uuid4().hex+".png"
+            file = request.files['files[]']
+            s3 = bot_session.resource("s3")
+            s3.Bucket("test1fa").upload_fileobj(file, rand_id)
+            assg = Assignments(assignment['title'], hola.id, rand_id)
+            db.session.add(assg)
+            db.session.commit()
+            hws = Assignments.query.all()
+            print(hws)
+            return jsonify('https://test1fa.s3.amazonaws.com/'+rand_id)
+        else:
+            return jsonify('We could not find the email selected.')
 
 @app.route("/hola", methods=["POST"])
 def holaa():
     print('hola')
+    hola = Assignments.query.all()
+    print(hola)
+    
     return jsonify('hola')
     
 
