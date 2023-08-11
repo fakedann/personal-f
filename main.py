@@ -30,18 +30,20 @@ class Users(db.Model):
             'role': self.role
         }
 
-class Assignments(db.Model):
+class Assignment(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     prof_id = db.Column(db.Integer)
     stud_id = db.Column(db.Integer)
     s3_url = db.Column(db.String(50))
+    grade = db.Column(db.Integer)
 
     def __init__(self, title, stud_id, url):
         self.title = title
         self.prof_id = 0
         self.stud_id = stud_id
         self.s3_url = url
+        self.grade = -1
 
     def set_professor(self, prof_id):
         self.prof_id = prof_id
@@ -52,8 +54,9 @@ class Assignments(db.Model):
             'title': self.title,
             'professor_id': self.prof_id,
             'student_id': self.stud_id,
+            'grade': self.grade,
             'url': self.s3_url
-        }
+        }        
 
 with app.app_context():
     db.create_all()
@@ -94,11 +97,11 @@ def create_homework():
             file = request.files['files[]']
             s3 = bot_session.resource("s3")
             s3.Bucket("test1fa").upload_fileobj(file, rand_id)
-            assg = Assignments(assignment['title'], hola.id, rand_id)
-            db.session.add(assg)
-            db.session.commit()
-            hws = Assignments.query.all()
-            print(hws)
+            # assg = Assignments(assignment['title'], hola.id, rand_id)
+            # db.session.add(assg)
+            # db.session.commit()
+            # hws = Assignments.query.all()
+            # print(hws)
             return jsonify('https://test1fa.s3.amazonaws.com/'+rand_id)
         else:
             return jsonify('We could not find the email selected.')
@@ -108,11 +111,15 @@ def holaa():
     print('hola')
     chao = Users.query.filter_by(email="joseleon@gmail.com").first()
     print(chao)
-    hola = Assignments.query.first()
-    print(hola)
-    hola.set_professor(chao.id)
+    # hola = Assignment('dasda', chao.id, '82913dasdsa')
+    # db.session.add(hola)
+    # db.session.commit()
+    tutu = Assignment.query.first()
+    tutu.set_professor(chao.id)
+    # db.session.query(Assignment).delete()
+    # db.session.commit()
     
-    return hola.to_json()
+    return tutu.to_json()
     
 
 
