@@ -1,3 +1,4 @@
+from turtle import st
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -105,23 +106,17 @@ def create_homework():
         else:
             return jsonify('We could not find the email submitted.')
 
-@app.route("/hola", methods=["POST"])
-def holaa():
-    print(request.form['email'])
-    chao = Users.query.filter_by(email="joseleon@gmail.com")
-    hola = Assignment(request.form['title'], chao.id, '82913dasdsa')
-    # db.session.add(hola)
-    # db.session.commit()
+@app.route("/assignments/<user_id>", methods=["GET"])
+def assgs(user_id):
+    all_users = Assignment.query.filter_by(stud_id=user_id).all()
+    arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':assg.s3_url} for assg in all_users]
+    return jsonify(arr)
     
-    # db.session.query(Assignment).delete()
-    # db.session.commit()
-    
-    return hola
     
 @app.route("/users", methods=["GET"])
 def check_users():
-    all_users = Assignment.query.filter_by(id=8).first()
-    return all_users.to_json()
+    all_users = Assignment.query.filter_by(stud_id=1).all()
+    return jsonify(len(all_users))
 
 
 if __name__ == "__main__":

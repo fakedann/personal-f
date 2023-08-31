@@ -6,6 +6,7 @@ import LoginButton from './LoginButton';
 import HomePage from './HomePage';
 import NavBar from './NavBar';
 import SubmitHw from './SubmitHw';
+import Assignment from './Assignment';
 
 function App() {
 
@@ -47,7 +48,8 @@ function App() {
     <Routes>
       <Route path="/" element={<NavBar />}>
         <Route index element={<HomePage user={user}/>} />
-        <Route exact path="/submit/hw" element={<SubmitHw user={user}/>} /> 
+        <Route exact path="/submit/hw" element={<SubmitHw user={user}/>} />
+        <Route exact path="/assignments" element={<Assignment user={user}/>} />  
       </Route>
     </Routes>
   </BrowserRouter>

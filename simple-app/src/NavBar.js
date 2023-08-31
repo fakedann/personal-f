@@ -8,6 +8,7 @@ function NavBar(){
       <ul>
         <Link to="/">Home</Link>
         <Link to="/submit/hw">Submit Homework</Link>
+        <Link to="/assignments">Assignments</Link>
       </ul>
     </nav>
     <Outlet />
