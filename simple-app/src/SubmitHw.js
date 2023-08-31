@@ -45,7 +45,7 @@ function SubmitHw({user}){
 
   return (
     <div className="homePage">
-       <p>aqui subes la tareita!</p>
+       <p>Submit your homework</p>
        <form onSubmit={handleSubmit}>
           <label>Assignment title:</label>
           <input
@@ -54,9 +54,11 @@ function SubmitHw({user}){
             onChange={handleChange}
             value={formData.title}
           />
-          <input type="file" name="file" encType="multipart/form-data" onChange={handleFile}/>
-          
-          <button className="botones" type="submit">Submit</button> 
+          <div className="asgBotones">
+            <input type="file" name="file" encType="multipart/form-data" onChange={handleFile}/>
+            
+            <button className="botones" type="submit">Submit</button> 
+          </div>
         </form>
     </div>
   )

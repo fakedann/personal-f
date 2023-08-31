@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
+import GradeAssignment from "./GradeAssingment";
+
 
 function Assignment({user}){
 
   const [assignments, setAssgs] = useState([])
+  const [view, setView] = useState('')
   console.log(assignments)
+
+  function gradeSection(id){
+    console.log(id)
+    setView('grade')
+    
+  }
 
   useEffect( () => {
     console.log('inside')
@@ -18,26 +27,30 @@ function Assignment({user}){
   }, [])
 
   return (
-   <div id="assg">
-     <p>welcome to assg</p>
-     <table className="styled-table">
-       <thead>
-         <tr>
-           <th>id</th>
-           <th>title</th>
-           <th>grade</th>
-         </tr>
-       </thead>
-       <tbody>
-         {assignments.map( assObj => <tr key={assObj.id}>
-          <td>{assObj.id}</td>
-          <td><a href={assObj.url}>{assObj.title}</a></td>
-          <td>{assObj.grade}</td>
-         </tr>)}
-       </tbody>
-     </table>
-   </div>
+    <div>
+      {view === '' ? <div id="assg">
+    <table className="styled-table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>title</th>
+          <th>grade</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {assignments.map( assObj => <tr key={assObj.id}>
+         <td>{assObj.id}</td>
+         <td><a href={assObj.url}>{assObj.title}</a></td>
+         {assObj.grade > 0 ? <td>{assObj.grade}</td>: <td>Not graded yet</td>}
+         <td><button onClick={() => gradeSection(assObj.id)}>Grade</button></td>
+        </tr>)}
+      </tbody>
+    </table>
+  </div>: <GradeAssignment user={user}/>}
+    </div>
   )
 }
 
 export default Assignment
+

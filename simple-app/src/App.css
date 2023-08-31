@@ -45,6 +45,10 @@ html {
 
 }
 
+.asgBotones {
+  margin-top: 20px;
+}
+
 .styled-table {
 	border-collapse: collapse;
 	margin: 25px 0;
