@@ -1,5 +1,3 @@
-import email
-from gettext import find
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -97,30 +95,33 @@ def create_homework():
             file = request.files['files[]']
             s3 = bot_session.resource("s3")
             s3.Bucket("test1fa").upload_fileobj(file, rand_id)
-            # assg = Assignments(assignment['title'], hola.id, rand_id)
-            # db.session.add(assg)
-            # db.session.commit()
-            # hws = Assignments.query.all()
-            # print(hws)
+            assg = Assignment(assignment['title'], hola.id, rand_id)
+            prof = Users.query.filter_by(email="joseleon@gmail.com").first()
+            assg.set_professor(prof.id)
+            db.session.add(assg)
+            db.session.commit()
+            print(assg.id)
             return jsonify('https://test1fa.s3.amazonaws.com/'+rand_id)
         else:
-            return jsonify('We could not find the email selected.')
+            return jsonify('We could not find the email submitted.')
 
 @app.route("/hola", methods=["POST"])
 def holaa():
-    print('hola')
-    chao = Users.query.filter_by(email="joseleon@gmail.com").first()
-    print(chao)
-    # hola = Assignment('dasda', chao.id, '82913dasdsa')
+    print(request.form['email'])
+    chao = Users.query.filter_by(email="joseleon@gmail.com")
+    hola = Assignment(request.form['title'], chao.id, '82913dasdsa')
     # db.session.add(hola)
     # db.session.commit()
-    tutu = Assignment.query.first()
-    tutu.set_professor(chao.id)
+    
     # db.session.query(Assignment).delete()
     # db.session.commit()
     
-    return tutu.to_json()
+    return hola
     
+@app.route("/users", methods=["GET"])
+def check_users():
+    all_users = Assignment.query.filter_by(id=8).first()
+    return all_users.to_json()
 
 
 if __name__ == "__main__":
