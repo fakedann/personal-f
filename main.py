@@ -106,16 +106,17 @@ def create_homework():
         else:
             return jsonify('We could not find the email submitted.')
 
-@app.route("/assignments/<user_id>", methods=["GET"])
-def assgs(user_id):
-    all_users = Assignment.query.filter_by(stud_id=user_id).all()
-    arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':assg.s3_url} for assg in all_users]
+@app.route("/assignments/<user_email>", methods=["GET"])
+def assgs(user_email):
+    person = Users.query.filter_by(email=user_email).first()
+    all_users = Assignment.query.filter_by(stud_id=person.id).all()
+    arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':'https://test1fa.s3.amazonaws.com/'+assg.s3_url, 'grade':assg.grade} for assg in all_users]
     return jsonify(arr)
     
     
 @app.route("/users", methods=["GET"])
 def check_users():
-    all_users = Assignment.query.filter_by(stud_id=1).all()
+    all_users = Assignment.query.filter_by(stud_id=3).all()
     return jsonify(len(all_users))
 
 
