@@ -26,6 +26,12 @@ html {
   margin-top: 150px;
 }
 
+#compl table{
+	margin: auto;
+	margin-bottom: 20px;
+  background-color: white;
+}
+
 .botones {
   background-color: #7C6354;
   border: 2px solid black;
