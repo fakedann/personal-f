@@ -6,12 +6,11 @@ function Assignment({user}){
 
   const [assignments, setAssgs] = useState([])
   const [view, setView] = useState('')
-  console.log(assignments)
+  console.log('assignments')
 
   function gradeSection(id){
     console.log(id)
-    setView('grade')
-    
+    setView(id)
   }
 
   useEffect( () => {
@@ -24,7 +23,7 @@ function Assignment({user}){
         r.json().then( (err) => console.log(err))
       }
     })
-  }, [])
+  }, [user])
 
   return (
     <div>
@@ -47,7 +46,7 @@ function Assignment({user}){
         </tr>)}
       </tbody>
     </table>
-  </div>: <GradeAssignment user={user}/>}
+  </div>: <GradeAssignment user={user} id={view} />}
     </div>
   )
 }

@@ -47,6 +47,9 @@ class Assignment(db.Model):
     def set_professor(self, prof_id):
         self.prof_id = prof_id
 
+    def set_grade(self, grade):
+        self.grade = grade
+
     def to_json(self):
         return {
             'id': self.id,
@@ -112,6 +115,16 @@ def assgs(user_email):
     all_users = Assignment.query.filter_by(stud_id=person.id).all()
     arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':'https://test1fa.s3.amazonaws.com/'+assg.s3_url, 'grade':assg.grade} for assg in all_users]
     return jsonify(arr)
+
+@app.route("/gradeAssignment", methods=["POST"])
+def grade_assignment():
+    change = request.form
+    print(change)
+    assg = Assignment.query.filter_by(id=change['id']).first()
+    assg.set_grade(change['grade'])
+    db.session.add(assg)
+    db.session.commit()
+    return jsonify('success!')
     
     
 @app.route("/users", methods=["GET"])
