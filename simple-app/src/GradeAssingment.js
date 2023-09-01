@@ -32,7 +32,7 @@ function GradeAssignment({user, id}){
 
   return (
     <div className="homePage">
-      <p>Grading assingment #</p>
+      <p>Grading assingment # {id}</p>
       <form onSubmit={handleSubmit}>
         <label>Score:</label>
         <input
@@ -43,6 +43,7 @@ function GradeAssignment({user, id}){
         />
        <button className="botones" type="submit">Submit</button>
       </form>
+      <button id="cancelBtn" className="botones" onClick={ () => setView('e')}>Cancel</button>
  </div>
   )
 }

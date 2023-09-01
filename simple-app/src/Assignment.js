@@ -23,7 +23,7 @@ function Assignment({user}){
         r.json().then( (err) => console.log(err))
       }
     })
-  }, [user])
+  }, [])
 
   return (
     <div>
@@ -41,8 +41,8 @@ function Assignment({user}){
         {assignments.map( assObj => <tr key={assObj.id}>
          <td>{assObj.id}</td>
          <td><a href={assObj.url}>{assObj.title}</a></td>
-         {assObj.grade > 0 ? <td>{assObj.grade}</td>: <td>Not graded yet</td>}
-         <td><button onClick={() => gradeSection(assObj.id)}>Grade</button></td>
+         {assObj.grade >= 0 ? <td>{assObj.grade}</td>: <td>Not graded yet</td>}
+         {user.Role_in_company === 'pro' ? <td><button onClick={() => gradeSection(assObj.id)}>Grade</button></td> : null}
         </tr>)}
       </tbody>
     </table>

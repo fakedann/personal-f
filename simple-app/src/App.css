@@ -35,6 +35,7 @@ html {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  margin-left: 10px;
 }
 
 .nav ul{
@@ -47,6 +48,10 @@ html {
 
 .asgBotones {
   margin-top: 20px;
+}
+
+#cancelBtn{
+  margin-top: 30px;
 }
 
 .styled-table {
