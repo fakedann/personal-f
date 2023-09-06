@@ -42,7 +42,7 @@ function Assignment({user}){
          <td>{assObj.id}</td>
          <td><a href={assObj.url}>{assObj.title}</a></td>
          {assObj.grade >= 0 ? <td>{assObj.grade}</td>: <td>Not graded yet</td>}
-         {user.Role_in_company === 'pro' ? <td><button onClick={() => gradeSection(assObj.id)}>Grade</button></td> : null}
+         {user.Role_in_company === 'pro'? <td><button onClick={() => gradeSection(assObj.id)}>Grade</button></td> : null}
         </tr>)}
       </tbody>
     </table>

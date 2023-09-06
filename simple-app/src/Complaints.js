@@ -19,7 +19,7 @@ function Complaints({user}){
   }, [])
 
   if (view !== ''){
-    return <ReviewComplaint user={user}/>
+    return <ReviewComplaint compl={view} user={user}/>
   }
 
   return (
@@ -36,8 +36,8 @@ function Complaints({user}){
             <tbody>
               {complaints.map( complObj => <tr key={complObj.id}>
               <td>{complObj.assg_id}</td>
-              <td>{complObj.status === 0 ? "Pending" : "Reviewed"}</td>
-              {user.Role_in_company === "pro" ? <td><button onClick={ () => setView('e')}>Review</button></td> : null}
+              <td>{complObj.status === 0 ? "Pending" : <b>Reviewed</b>}</td>
+              {user.Role_in_company === "pro" ? <td><button onClick={ () => setView(complObj.id)}>Review</button></td> : null}
               </tr>)}
             </tbody>
           </table> }

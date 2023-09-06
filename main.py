@@ -162,13 +162,26 @@ def compls(user_email, user_role):
     arr = [{'id':compl.id, 'stud_id':compl.stud_id, 'prof_id':compl.prof_id, 'assg_id': compl.assg_id, 'status': compl.status, 'message':compl.message} for compl in all_complaints]
     return jsonify(arr)
     
-    
+@app.route("/review_complaint/<complaint_id>", methods=["POST"])
+def review_complaint(complaint_id):
+    print(complaint_id)
+    compl = Complaint.query.filter_by(id=complaint_id).first()
+    print(request.form)
+    if compl:
+        assg = Assignment.query.filter_by(id=compl.assg_id).first()
+        assg.grade = request.form['grade']
+        compl.message = request.form['message']
+        compl.status = 1
+        db.session.add(compl, assg)
+        db.session.commit()
+        return jsonify('entro el compl')
+    else:
+        return jsonify('incorrect number!')
+
 @app.route("/users", methods=["GET"])
 def check_users():
-    hola = Complaint(3, 14)
-    db.session.add(hola)
-    db.session.commit()
-    return hola.to_json()
+    compl = Complaint.query.filter_by(id=2).first()
+    return compl.to_json()
 
 
 if __name__ == "__main__":
