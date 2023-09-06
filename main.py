@@ -126,7 +126,7 @@ def create_homework():
             s3 = bot_session.resource("s3")
             s3.Bucket("test1fa").upload_fileobj(file, rand_id)
             assg = Assignment(assignment['title'], hola.id, rand_id)
-            prof = Users.query.filter_by(email="joseleon@gmail.com").first()
+            prof = Users.query.filter_by(email="daniel07escalona@gmail.com").first()
             assg.set_professor(prof.id)
             db.session.add(assg)
             db.session.commit()
@@ -138,7 +138,10 @@ def create_homework():
 @app.route("/assignments/<user_email>", methods=["GET"])
 def assgs(user_email):
     person = Users.query.filter_by(email=user_email).first()
-    all_users = Assignment.query.filter_by(stud_id=person.id).all()
+    if user_email == "daniel07escalona@gmail.com":
+        all_users = Assignment.query.filter_by(prof_id=person.id).all()
+    else:
+        all_users = Assignment.query.filter_by(stud_id=person.id).all()
     arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':'https://test1fa.s3.amazonaws.com/'+assg.s3_url, 'grade':assg.grade} for assg in all_users]
     return jsonify(arr)
 
@@ -195,9 +198,12 @@ def create_complaint(user_email):
 
 @app.route("/users", methods=["GET"])
 def check_users():
-    compl = Complaint.query.all()
-    arr = [{'id':compl.id, 'stud_id':compl.stud_id, 'prof_id':compl.prof_id, 'assg_id': compl.assg_id, 'status': compl.status, 'message':compl.message} for compl in compl]
-    return jsonify(arr)
+    db.session.query(Complaint).delete()
+    db.session.commit()
+    # compls = Users.query.all()
+    # arr = [{'id':compl.id, 'email':compl.email} for compl in compls]
+    # return jsonify(arr)
+    return jsonify('deleting!')
 
 
 if __name__ == "__main__":

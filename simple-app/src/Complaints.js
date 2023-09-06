@@ -34,14 +34,14 @@ function Complaints({user}){
               <tr>
                 <th>id</th>
                 <th>status</th>
-                {user.email === "joseleon@gmail.com" ? <th></th>: <th>Message</th>}
+                {user.email === "daniel07escalona@gmail.com" ? <th></th>: <th>Your message</th>}
               </tr>
             </thead>
             <tbody>
               {complaints.map( complObj => <tr key={complObj.id}>
               <td>{complObj.assg_id}</td>
               <td>{complObj.status === 0 ? "Pending" : <b>Reviewed</b>}</td>
-              {user.email === "joseleon@gmail.com" ? <td><button onClick={ () => setView(complObj.id)}>Review</button></td> : <td><p>{complObj.message}</p></td>}
+              {user.email === "daniel07escalona@gmail.com" ? <td><button onClick={ () => setView(complObj.id)}>Review</button></td> : <td><p>{complObj.message}</p></td>}
               </tr>)}
             </tbody>
           </table> }

@@ -4,10 +4,9 @@ function SubmitHw({user}){
 
   const [formData, setFormData] = useState({
     title: "",
-
   })
-
   const [file, setFile] = useState('')
+  const [view, setView] = useState('')
 
   function handleFile(event){
     setFile(event.target.files[0])
@@ -30,6 +29,7 @@ function SubmitHw({user}){
         r.json().then( (err) => console.log(err))
       }
     })
+    setView('sub')
   }
 
   function handleChange(event) {
@@ -40,6 +40,13 @@ function SubmitHw({user}){
       ...formData,
       [name]: value,
     });
+  }
+
+  if (view !== ''){
+    return <div>
+      <p>Success!!!</p>
+      <button className="botones" onClick={ () => setView('')}>Dismiss</button>
+    </div>
   }
   
 
