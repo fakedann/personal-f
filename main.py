@@ -1,3 +1,4 @@
+import email
 from turtle import st
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -68,12 +69,12 @@ class Complaint(db.Model):
     status = db.Column(db.Integer)
     message = db.Column(db.String(50))
 
-    def __init__(self, stud_id, assg_id):
-        self.prof_id = 2
+    def __init__(self, stud_id, assg_id, message):
+        self.prof_id = 3
         self.stud_id = stud_id
         self.assg_id = assg_id
         self.status = 0
-        self.message = ''
+        self.message = message
 
     def to_json(self):
         return {
@@ -151,12 +152,12 @@ def grade_assignment():
     db.session.commit()
     return jsonify('success!')
 
-@app.route("/complaints/<user_email>/<user_role>", methods=["GET"])
-def compls(user_email, user_role):
+@app.route("/complaints/<user_email>", methods=["GET"])
+def compls(user_email):
     person = Users.query.filter_by(email=user_email).first()
-    print(user_role, user_email)
-    if user_role == "pro":
-        all_complaints = Complaint.query.filter_by(prof_id=2).all()
+    print(user_email)
+    if user_email == "daniel07escalona@gmail.com":
+        all_complaints = Complaint.query.filter_by(prof_id=3).all()
     else:
         all_complaints = Complaint.query.filter_by(stud_id=person.id).all()
     arr = [{'id':compl.id, 'stud_id':compl.stud_id, 'prof_id':compl.prof_id, 'assg_id': compl.assg_id, 'status': compl.status, 'message':compl.message} for compl in all_complaints]
@@ -178,10 +179,25 @@ def review_complaint(complaint_id):
     else:
         return jsonify('incorrect number!')
 
+@app.route("/create_complaint/<user_email>", methods=["POST"])
+def create_complaint(user_email):
+    print(user_email)
+    person = Users.query.filter_by(email=user_email).first()
+    if person:
+        print(request.form)
+        compl = Complaint(person.id, request.form['assgid'], request.form['message'])
+        db.session.add(compl)
+        db.session.commit()
+        return jsonify('working!') 
+    else:
+        print('nothing!')
+        return jsonify('failed') 
+
 @app.route("/users", methods=["GET"])
 def check_users():
-    compl = Complaint.query.filter_by(id=2).first()
-    return compl.to_json()
+    compl = Complaint.query.all()
+    arr = [{'id':compl.id, 'stud_id':compl.stud_id, 'prof_id':compl.prof_id, 'assg_id': compl.assg_id, 'status': compl.status, 'message':compl.message} for compl in compl]
+    return jsonify(arr)
 
 
 if __name__ == "__main__":

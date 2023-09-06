@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReviewComplaint from "./ReviewComplaint";
+import CreateComplaint from "./CreateComplaint";
 
 function Complaints({user}){
 
@@ -8,7 +9,7 @@ function Complaints({user}){
 
   useEffect( () => {
     console.log('inside')
-    fetch(`http://127.0.0.1:5000/complaints/${user.email}/${user.Role_in_company}`, {
+    fetch(`http://127.0.0.1:5000/complaints/${user.email}`, {
     }).then((r) => {
       if (r.ok) {
         r.json().then( (resp) => setComplaints(resp))
@@ -18,13 +19,16 @@ function Complaints({user}){
     })
   }, [])
 
-  if (view !== ''){
+  if (view === 'create'){
+    return <CreateComplaint user={user}/>
+  }else if(view !== ''){
     return <ReviewComplaint compl={view} user={user}/>
   }
 
   return (
 
     <div id="compl">
+      <button className="botones" onClick={ () => setView('create')}>File Complaint</button>
       {complaints.length === 0 ? <p>You have no complaints to review.</p> : <table className="styled-table">
             <thead>
               <tr>
@@ -37,7 +41,7 @@ function Complaints({user}){
               {complaints.map( complObj => <tr key={complObj.id}>
               <td>{complObj.assg_id}</td>
               <td>{complObj.status === 0 ? "Pending" : <b>Reviewed</b>}</td>
-              {user.email === "joseleon@gmail.com" ? <td><button onClick={ () => setView(complObj.id)}>Review</button></td> : <p>{complObj.message}</p>}
+              {user.email === "joseleon@gmail.com" ? <td><button onClick={ () => setView(complObj.id)}>Review</button></td> : <td><p>{complObj.message}</p></td>}
               </tr>)}
             </tbody>
           </table> }
