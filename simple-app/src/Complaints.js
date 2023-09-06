@@ -30,14 +30,14 @@ function Complaints({user}){
               <tr>
                 <th>id</th>
                 <th>status</th>
-                <th></th>
+                {user.email === "joseleon@gmail.com" ? <th></th>: <th>Message</th>}
               </tr>
             </thead>
             <tbody>
               {complaints.map( complObj => <tr key={complObj.id}>
               <td>{complObj.assg_id}</td>
               <td>{complObj.status === 0 ? "Pending" : <b>Reviewed</b>}</td>
-              {user.Role_in_company === "pro" ? <td><button onClick={ () => setView(complObj.id)}>Review</button></td> : null}
+              {user.email === "joseleon@gmail.com" ? <td><button onClick={ () => setView(complObj.id)}>Review</button></td> : <p>{complObj.message}</p>}
               </tr>)}
             </tbody>
           </table> }

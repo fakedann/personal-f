@@ -35,6 +35,8 @@ function ReviewComplaint({compl, user}){
         r.json().then( (err) => console.log(err))
       }
     })
+    setView('e')
+
   }
 
   if (view !== ''){
