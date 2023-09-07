@@ -23,7 +23,7 @@ html {
   width: 50%;
   border: 3px solid black;
   padding: 10px;
-  margin-top: 150px;
+  margin-top: 100px;
 }
 
 #compl table{
@@ -75,8 +75,20 @@ html {
   background-color: white;
 }
 
+#compl {
+  text-align: center;
+  margin-top: 40px;
+}
+
+#compl table{
+	margin: auto;
+  margin-top: 30px;
+	margin-bottom: 20px;
+  background-color: white;
+}
+
 .styled-table thead tr {
-	background-color: #009879;
+	background-color: #7C6354;
 	color: #ffffff;
 	text-align: left;
 }
@@ -91,15 +103,37 @@ html {
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-	background-color: #f3f3f3;
+	background-color: #ffffff;
 }
 
 .styled-table tbody tr:last-of-type {
-	border-bottom: 2px solid #009879;
+	border-bottom: 2px solid #7C6354;
 }
 
 .styled-table tbody tr.active-row {
 	font-weight: bold;
 	color: #009879;
+}
+
+#createComplaint {
+  text-align: center;
+  background-color: white;
+  margin: auto;
+  width: 600px;
+  border: 3px solid black;
+  padding: 10px;
+  margin-top: 100px;
+}
+
+#createComplaint form label{
+  margin-left: 30px;
+}
+
+#createComplaint button {
+  margin-top: 30px;
+}
+
+#hwSubmission{
+  text-align: center;
 }
 

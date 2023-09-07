@@ -42,10 +42,7 @@ function App() {
     if(user.login_count === 1 && newUser === ''){
       createUserinDatabase()
     }else{
-      console.log("already created!")
-    }
-
-    return <BrowserRouter>
+      return <BrowserRouter>
     <Routes>
       <Route path="/" element={<NavBar />}>
         <Route index element={<HomePage user={user}/>} />
@@ -55,6 +52,7 @@ function App() {
       </Route>
     </Routes>
   </BrowserRouter>
+    }
     
   }
   else{

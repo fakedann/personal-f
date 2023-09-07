@@ -6,15 +6,12 @@ function Assignment({user}){
 
   const [assignments, setAssgs] = useState([])
   const [view, setView] = useState('')
-  console.log('assignments')
 
   function gradeSection(id){
-    console.log(id)
     setView(id)
   }
 
   useEffect( () => {
-    console.log('inside')
     fetch(`http://127.0.0.1:5000/assignments/${user.email}`, {
     }).then((r) => {
       if (r.ok) {
@@ -34,6 +31,7 @@ function Assignment({user}){
           <th>id</th>
           <th>title</th>
           <th>grade</th>
+          {user.email === "daniel07escalona@gmail.com" ? <th>student</th>: null}
           <th></th>
         </tr>
       </thead>
@@ -42,6 +40,7 @@ function Assignment({user}){
          <td>{assObj.id}</td>
          <td><a href={assObj.url}>{assObj.title}</a></td>
          {assObj.grade >= 0 ? <td>{assObj.grade}</td>: <td>Not graded yet</td>}
+         {user.email === "daniel07escalona@gmail.com" ? <th>{assObj.student}</th>: null}
          {user.Role_in_company === 'pro'? <td><button onClick={() => gradeSection(assObj.id)}>Grade</button></td> : null}
         </tr>)}
       </tbody>

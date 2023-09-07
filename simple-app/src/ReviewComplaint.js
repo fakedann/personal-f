@@ -6,8 +6,6 @@ function ReviewComplaint({compl, user}){
 
   const [view, setView] = useState('')
   const [updatedGrade, setUpdatedGrade] = useState({message: '', grade: 0})
-  console.log(compl)
-
 
   function handleChange(event) {
     const name = event.target.name;
@@ -25,7 +23,7 @@ function ReviewComplaint({compl, user}){
     newGrade.append('message', updatedGrade.message)
     newGrade.append('grade', updatedGrade.grade)
 
-    fetch(`http://127.0.0.1:5000/review_complaint/${compl}`, {
+    fetch(`http://127.0.0.1:5000/review_complaint/${compl.id}`, {
       method: "POST",
       body: newGrade,
     }).then((r) => {
@@ -44,8 +42,8 @@ function ReviewComplaint({compl, user}){
   }
 
   return (
-    <div>
-      <p>rewview!!!</p>
+    <div id="createComplaint">
+      <p>Reviewing assignment #{compl.assg_id}</p>
       <form onSubmit={handleSubmit}>
         <label>Message:</label>
         <input
@@ -62,8 +60,8 @@ function ReviewComplaint({compl, user}){
           value={updatedGrade.grade}
         />
        <button className="botones" type="submit">Submit</button>
+       <button id="cancelBtn" className="botones" onClick={ () => setView('e')}>Cancel</button>
       </form>
-      <button id="cancelBtn" className="botones" onClick={ () => setView('e')}>Cancel</button>
     </div>
   )
 }

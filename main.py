@@ -1,5 +1,3 @@
-import email
-from turtle import st
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -115,7 +113,6 @@ def greet():
 @app.route("/createHomework", methods=["POST"])
 def create_homework():
     assignment = request.form
-    print(assignment)
     if 'files[]' not in request.files:
         return jsonify('File not included.')
     else:
@@ -130,7 +127,6 @@ def create_homework():
             assg.set_professor(prof.id)
             db.session.add(assg)
             db.session.commit()
-            print(assg.id)
             return jsonify('https://test1fa.s3.amazonaws.com/'+rand_id)
         else:
             return jsonify('We could not find the email submitted.')
@@ -140,9 +136,10 @@ def assgs(user_email):
     person = Users.query.filter_by(email=user_email).first()
     if user_email == "daniel07escalona@gmail.com":
         all_users = Assignment.query.filter_by(prof_id=person.id).all()
+        arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':'https://test1fa.s3.amazonaws.com/'+assg.s3_url, 'grade':assg.grade, 'student':Users.query.filter_by(id=assg.stud_id).first().email} for assg in all_users]
     else:
         all_users = Assignment.query.filter_by(stud_id=person.id).all()
-    arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':'https://test1fa.s3.amazonaws.com/'+assg.s3_url, 'grade':assg.grade} for assg in all_users]
+        arr = [{'id':assg.id, 'title':assg.title, 'prof_id':assg.prof_id, 'url':'https://test1fa.s3.amazonaws.com/'+assg.s3_url, 'grade':assg.grade} for assg in all_users]
     return jsonify(arr)
 
 @app.route("/gradeAssignment", methods=["POST"])
@@ -158,7 +155,6 @@ def grade_assignment():
 @app.route("/complaints/<user_email>", methods=["GET"])
 def compls(user_email):
     person = Users.query.filter_by(email=user_email).first()
-    print(user_email)
     if user_email == "daniel07escalona@gmail.com":
         all_complaints = Complaint.query.filter_by(prof_id=3).all()
     else:
@@ -168,9 +164,7 @@ def compls(user_email):
     
 @app.route("/review_complaint/<complaint_id>", methods=["POST"])
 def review_complaint(complaint_id):
-    print(complaint_id)
     compl = Complaint.query.filter_by(id=complaint_id).first()
-    print(request.form)
     if compl:
         assg = Assignment.query.filter_by(id=compl.assg_id).first()
         assg.grade = request.form['grade']
@@ -178,32 +172,31 @@ def review_complaint(complaint_id):
         compl.status = 1
         db.session.add(compl, assg)
         db.session.commit()
-        return jsonify('entro el compl')
+        return jsonify('Success')
     else:
         return jsonify('incorrect number!')
 
 @app.route("/create_complaint/<user_email>", methods=["POST"])
 def create_complaint(user_email):
-    print(user_email)
     person = Users.query.filter_by(email=user_email).first()
-    if person:
-        print(request.form)
+    assg = Assignment.query.filter_by(id=request.form['assgid'], stud_id=person.id).first()
+    if assg:
         compl = Complaint(person.id, request.form['assgid'], request.form['message'])
         db.session.add(compl)
         db.session.commit()
         return jsonify('working!') 
     else:
         print('nothing!')
-        return jsonify('failed') 
+        return jsonify('failed'), 404 
 
 @app.route("/users", methods=["GET"])
 def check_users():
-    db.session.query(Complaint).delete()
-    db.session.commit()
-    # compls = Users.query.all()
-    # arr = [{'id':compl.id, 'email':compl.email} for compl in compls]
-    # return jsonify(arr)
-    return jsonify('deleting!')
+    # db.session.query(Complaint).delete()
+    # db.session.commit()
+    compls = Complaint.query.all()
+    arr = [{'id':compl.id, 'message':compl.message} for compl in compls]
+    return jsonify(arr)
+    # return jsonify('deleting!')
 
 
 if __name__ == "__main__":

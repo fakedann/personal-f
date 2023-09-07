@@ -24,12 +24,17 @@ function SubmitHw({user}){
       body: homework,
     }).then((r) => {
       if (r.ok) {
-        r.json().then( (resp) => console.log(resp))
+        r.json().then( (resp) => null)
       } else{
         r.json().then( (err) => console.log(err))
       }
     })
     setView('sub')
+    setFormData({
+      ...formData,
+      ['title']: '',
+    })
+    setFile('')
   }
 
   function handleChange(event) {
@@ -43,7 +48,7 @@ function SubmitHw({user}){
   }
 
   if (view !== ''){
-    return <div>
+    return <div id="hwSubmission">
       <p>Success!!!</p>
       <button className="botones" onClick={ () => setView('')}>Dismiss</button>
     </div>

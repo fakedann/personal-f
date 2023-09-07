@@ -5,6 +5,7 @@ function CreateComplaint({user}){
 
   const [complaint, setComplaint] = useState({assgid: 0, message: ''})
   const [view, setView] = useState('')
+  const [error, setError] = useState('')
 
   function handleChange(event) {
     const name = event.target.name;
@@ -27,12 +28,12 @@ function CreateComplaint({user}){
       body: newComplaint,
     }).then((r) => {
       if (r.ok) {
-        r.json().then( (resp) => console.log(resp))
+        r.json().then( () => setView('e'))
       } else{
-        r.json().then( (err) => console.log(err))
+        r.json().then( () => setError('e'))
       }
     })
-    setView('e')
+    
   }
 
   if (view !== ''){
@@ -40,7 +41,7 @@ function CreateComplaint({user}){
   }
 
   return (
-   <div>
+   <div id="reviewComplaint">
      <p>Please provide the correct assignment id:</p>
      <form onSubmit={handleSubmit}>
         <label>Assingment id:</label>
@@ -58,8 +59,10 @@ function CreateComplaint({user}){
           value={complaint.message}
         />
        <button className="botones" type="submit">Submit</button>
+       <button id="cancelBtn" className="botones" onClick={ () => setView('e')}>Cancel</button>
       </form>
-      <button id="cancelBtn" className="botones" onClick={ () => setView('e')}>Cancel</button>
+    
+      {error !== '' ? <p>Please, try again and submit one of your assignment ids.</p>: null}
    </div>
   )
 }
