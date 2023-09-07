@@ -43,9 +43,10 @@ function ReviewComplaint({compl, user}){
 
   return (
     <div id="createComplaint">
-      <p>Reviewing assignment #{compl.assg_id}</p>
+      <p><b>Reviewing assignment #{compl.assg_id} by {compl.student}</b></p>
+      <p>Student's message: {compl.message}</p>
       <form onSubmit={handleSubmit}>
-        <label>Message:</label>
+        <label>Response:</label>
         <input
           type="text"
           name="message"

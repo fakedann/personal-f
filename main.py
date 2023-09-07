@@ -157,9 +157,10 @@ def compls(user_email):
     person = Users.query.filter_by(email=user_email).first()
     if user_email == "daniel07escalona@gmail.com":
         all_complaints = Complaint.query.filter_by(prof_id=3).all()
+        arr = [{'id':compl.id, 'stud_id':compl.stud_id, 'prof_id':compl.prof_id, 'assg_id': compl.assg_id, 'status': compl.status, 'message':compl.message, 'student':Users.query.filter_by(id=compl.stud_id).first().email} for compl in all_complaints]
     else:
         all_complaints = Complaint.query.filter_by(stud_id=person.id).all()
-    arr = [{'id':compl.id, 'stud_id':compl.stud_id, 'prof_id':compl.prof_id, 'assg_id': compl.assg_id, 'status': compl.status, 'message':compl.message} for compl in all_complaints]
+        arr = [{'id':compl.id, 'stud_id':compl.stud_id, 'prof_id':compl.prof_id, 'assg_id': compl.assg_id, 'status': compl.status, 'message':compl.message} for compl in all_complaints]
     return jsonify(arr)
     
 @app.route("/review_complaint/<complaint_id>", methods=["POST"])

@@ -41,7 +41,7 @@ function CreateComplaint({user}){
   }
 
   return (
-   <div id="reviewComplaint">
+   <div id="createComplaint">
      <p>Please provide the correct assignment id:</p>
      <form onSubmit={handleSubmit}>
         <label>Assingment id:</label>

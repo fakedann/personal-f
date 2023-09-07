@@ -8,7 +8,6 @@ function GradeAssignment({user, id}){
 
   function handleSubmit(e){
     e.preventDefault()
-    console.log(grade)
     const grad = new FormData()
     grad.append('id', id)
     grad.append('grade', grade)
@@ -17,7 +16,7 @@ function GradeAssignment({user, id}){
       body: grad,
     }).then((r) => {
       if (r.ok) {
-        r.json().then( (resp) => console.log(resp))
+        r.json().then( () => null)
       } else{
         r.json().then( (err) => console.log(err))
       }

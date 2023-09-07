@@ -33,6 +33,7 @@ function Complaints({user}){
               <tr>
                 <th>Assingment id</th>
                 <th>status</th>
+                {user.email === "daniel07escalona@gmail.com" ? <th>student</th>: null}
                 {user.email === "daniel07escalona@gmail.com" ? <th></th>: <th>Your message</th>}
               </tr>
             </thead>
@@ -40,6 +41,7 @@ function Complaints({user}){
               {complaints.map( complObj => <tr key={complObj.id}>
               <td>{complObj.assg_id}</td>
               <td>{complObj.status === 0 ? "Pending" : <b>Reviewed</b>}</td>
+              {user.email === "daniel07escalona@gmail.com" ? <th>{complObj.student}</th>: null}
               {user.email === "daniel07escalona@gmail.com" && complObj.status === 0? <td><button onClick={ () => setView(complObj)}>Review</button></td> : <td><p>{complObj.message}</p></td>}
               </tr>)}
             </tbody>
