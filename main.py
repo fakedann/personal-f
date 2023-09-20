@@ -118,7 +118,7 @@ def create_homework():
     else:
         hola = Users.query.filter_by(email=assignment['email']).first()
         if hola:
-            rand_id = uuid.uuid4().hex+".png"
+            rand_id = uuid.uuid4().hex+".pdf"
             file = request.files['files[]']
             s3 = bot_session.resource("s3")
             s3.Bucket("test1fa").upload_fileobj(file, rand_id)
@@ -188,16 +188,23 @@ def create_complaint(user_email):
         return jsonify('working!') 
     else:
         print('nothing!')
-        return jsonify('failed'), 404 
+        return jsonify('failed'), 404
+
+@app.route("/user_assignments/<user_email>", methods=["GET"])
+def get_assignments(user_email):
+    person = Users.query.filter_by(email=user_email).first()
+    assgs = Assignment.query.filter_by(stud_id=person.id).all()
+    arr = [{'id':assg.id, 'title':assg.title, 'grade':assg.grade} for assg in assgs]
+    return jsonify(arr)
 
 @app.route("/users", methods=["GET"])
 def check_users():
-    # db.session.query(Complaint).delete()
-    # db.session.commit()
-    compls = Complaint.query.all()
-    arr = [{'id':compl.id, 'message':compl.message} for compl in compls]
-    return jsonify(arr)
-    # return jsonify('deleting!')
+    db.session.query(Complaint).delete()
+    db.session.commit()
+    # compls = Assignment.query.all()
+    # arr = [{'id':compl.id, 'title':compl.title} for compl in compls]
+    # return jsonify(arr)
+    return jsonify('deleting!')
 
 
 if __name__ == "__main__":

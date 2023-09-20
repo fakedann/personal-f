@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Complaints from "./Complaints";
 
 function CreateComplaint({user}){
 
   const [complaint, setComplaint] = useState({assgid: 0, message: ''})
+  const [userAssignments, setAssignments] = useState([])
   const [view, setView] = useState('')
   const [error, setError] = useState('')
+  const [selectVal, setSelect] = useState(0)
+
+  useEffect( () => {
+    fetch(`http://127.0.0.1:5000/user_assignments/${user.email}`, {
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then( (resp) => setAssignments(resp))
+      } else{
+        r.json().then( (err) => console.log(err))
+      }
+    })
+  }, [])
 
   function handleChange(event) {
     const name = event.target.name;
@@ -20,7 +33,7 @@ function CreateComplaint({user}){
   function handleSubmit(event){
     event.preventDefault()
     const newComplaint = new FormData()
-    newComplaint.append('assgid', complaint.assgid)
+    newComplaint.append('assgid', selectVal)
     newComplaint.append('message', complaint.message)
 
     fetch(`http://127.0.0.1:5000/create_complaint/${user.email}`, {
@@ -45,12 +58,9 @@ function CreateComplaint({user}){
      <p>Please provide the correct assignment id:</p>
      <form onSubmit={handleSubmit}>
         <label>Assingment id:</label>
-        <input
-          type="number"
-          name="assgid"
-          onChange={handleChange}
-          value={complaint.assgid}
-        />
+        <select value={selectVal} onChange={ e => setSelect(e.target.value)}>
+          {userAssignments.length > 0 ? userAssignments.map( assgnObj => <option key={assgnObj.id} value={assgnObj.id}>{assgnObj.id}</option>) : null}
+        </select>
         <label>Message:</label>
         <input
           type="type"
